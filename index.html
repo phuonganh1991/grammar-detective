@@ -5,59 +5,83 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Grammar Detective!</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
 
     body {
-      font-family: 'Great Vibes', cursive;
-      background: url('https://images.unsplash.com/photo-1604079628049-943ddbd8d94e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+      font-family: 'UnifrakturCook', cursive;
+      background: url('https://cdn.pixabay.com/photo/2017/01/20/00/30/fairy-tale-1997430_1280.jpg') no-repeat center center fixed;
       background-size: cover;
       text-align: center;
       padding: 40px;
       color: #fff;
-      backdrop-filter: brightness(0.8);
+      position: relative;
     }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 0;
+    }
+
+    * {
+      position: relative;
+      z-index: 1;
+    }
+
     h1 {
-      color: #ffdd57;
-      animation: shake 1s infinite alternate;
-      font-size: 3em;
+      color: #ffcc70;
+      animation: glow 2s ease-in-out infinite alternate;
+      font-size: 4em;
     }
-    @keyframes shake {
-      0% { transform: rotate(-1deg); }
-      100% { transform: rotate(1deg); }
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #ffd700, 0 0 10px #ff8c00; }
+      to { text-shadow: 0 0 10px #ffa500, 0 0 20px #ff4500; }
     }
     .sentence-box {
-      background: rgba(255, 255, 255, 0.85);
-      border: 2px dashed #ffcc00;
-      padding: 20px;
-      margin: 20px auto;
-      max-width: 700px;
-      font-size: 22px;
+      background: rgba(255, 255, 255, 0.95);
+      border: 3px dashed #ffcc00;
+      padding: 30px;
+      margin: 30px auto;
+      max-width: 900px;
+      font-size: 40px;
       color: #000;
+      box-shadow: 0 0 25px rgba(255, 204, 0, 0.6);
+      border-radius: 20px;
     }
     input[type="text"] {
-      font-size: 18px;
-      padding: 10px;
-      width: 60%;
-      margin: 10px 0;
-      border-radius: 8px;
+      font-size: 32px;
+      padding: 14px;
+      width: 70%;
+      margin: 14px 0;
+      border-radius: 12px;
       border: none;
+      font-family: 'UnifrakturCook', cursive;
     }
     button {
-      font-size: 20px;
+      font-size: 30px;
       background-color: #4caf50;
       color: white;
       border: none;
-      padding: 10px 20px;
+      padding: 16px 30px;
       cursor: pointer;
-      border-radius: 8px;
+      border-radius: 12px;
     }
     .result {
-      margin-top: 20px;
-      font-size: 22px;
+      margin-top: 26px;
+      font-size: 28px;
       font-weight: bold;
     }
     .hint {
-      font-size: 16px;
+      font-size: 26px;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 12px;
+      border-radius: 10px;
+      display: inline-block;
     }
   </style>
 </head>
@@ -72,7 +96,7 @@
   <div class="result" id="result"></div>
 
   <audio id="correctSound">
-    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_97f4b1d881.mp3" type="audio/mpeg">
+    <source src="https://cdn.pixabay.com/audio/2022/10/06/audio_2f46bde8be.mp3" type="audio/mpeg">
   </audio>
   <audio id="wrongSound">
     <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_54d21f5f38.mp3" type="audio/mpeg">
