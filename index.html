@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grammar Detective!</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+    body {
+      font-family: 'Great Vibes', cursive;
+      background: url('https://images.unsplash.com/photo-1604079628049-943ddbd8d94e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+      background-size: cover;
+      text-align: center;
+      padding: 40px;
+      color: #fff;
+      backdrop-filter: brightness(0.8);
+    }
+    h1 {
+      color: #ffdd57;
+      animation: shake 1s infinite alternate;
+      font-size: 3em;
+    }
+    @keyframes shake {
+      0% { transform: rotate(-1deg); }
+      100% { transform: rotate(1deg); }
+    }
+    .sentence-box {
+      background: rgba(255, 255, 255, 0.85);
+      border: 2px dashed #ffcc00;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 700px;
+      font-size: 22px;
+      color: #000;
+    }
+    input[type="text"] {
+      font-size: 18px;
+      padding: 10px;
+      width: 60%;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: none;
+    }
+    button {
+      font-size: 20px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+    .hint {
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🕵️ Grammar Detective!</h1>
+  <p class="hint">Hãy viết lại phần sai trong câu bên dưới bằng tiếng Anh (chỉ sửa phần sai).</p>
+
+  <div class="sentence-box" id="sentenceBox"></div>
+  <input type="text" id="userAnswer" placeholder="Gõ phần sửa đúng vào đây...">
+  <br>
+  <button onclick="checkAnswer()">Kiểm tra</button>
+  <div class="result" id="result"></div>
+
+  <audio id="correctSound">
+    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_97f4b1d881.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="wrongSound">
+    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_54d21f5f38.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const questions = [
+      { sentence: "She go to school every day.", answer: "goes" },
+      { sentence: "They is playing in the garden.", answer: "are" },
+      { sentence: "He have finished his homework.", answer: "has" },
+      { sentence: "I was sleep when the phone rang.", answer: "sleeping" },
+      { sentence: "We will going to the market tomorrow.", answer: "go" },
+      { sentence: "She don't like carrots.", answer: "doesn't" },
+      { sentence: "Tom and Jerry is funny.", answer: "are" },
+      { sentence: "He was watch TV when I arrived.", answer: "watching" },
+      { sentence: "They has a big house.", answer: "have" },
+      { sentence: "I will eats pizza tonight.", answer: "eat" }
+    ];
+
+    let current = 0;
+
+    function showQuestion() {
+      document.getElementById("sentenceBox").innerText = questions[current].sentence;
+      document.getElementById("userAnswer").value = "";
+      document.getElementById("result").innerText = "";
+    }
+
+    function checkAnswer() {
+      const userInput = document.getElementById("userAnswer").value.trim().toLowerCase();
+      const correctSound = document.getElementById("correctSound");
+      const wrongSound = document.getElementById("wrongSound");
+      const result = document.getElementById("result");
+
+      if (userInput === questions[current].answer.toLowerCase()) {
+        correctSound.pause();
+        correctSound.currentTime = 0;
+        correctSound.play();
+        result.innerHTML = "✅ Đúng rồi! Bạn thật là một thám tử ngữ pháp giỏi!";
+        setTimeout(() => {
+          current++;
+          if (current < questions.length) {
+            showQuestion();
+          } else {
+            document.getElementById("sentenceBox").innerText = "🎉 Bạn đã hoàn thành tất cả câu hỏi!";
+            document.getElementById("userAnswer").style.display = 'none';
+            document.querySelector("button").style.display = 'none';
+          }
+        }, 2000);
+      } else {
+        wrongSound.pause();
+        wrongSound.currentTime = 0;
+        wrongSound.play();
+        result.innerHTML = "❌ Sai rồi! Hãy thử lại nhé.";
+      }
+    }
+
+    window.onload = showQuestion;
+  </script>
+</body>
+</html>
